@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,8 +23,10 @@ public class Girl {
     @GeneratedValue
     private Integer id;
 
+    @NotNull(message = "罩杯不能为空")
     private String cupSize;
 
+    @Min(value = 18, message = "未成年少女禁止入内")
     private Integer age;
 
     public Girl() {
@@ -52,4 +56,12 @@ public class Girl {
         this.age = age;
     }
 
+    @Override
+    public String toString() {
+        return "Girl{" +
+                "id=" + id +
+                ", cupSize='" + cupSize + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

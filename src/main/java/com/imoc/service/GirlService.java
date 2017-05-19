@@ -2,6 +2,8 @@ package com.imoc.service;
 
 import com.imoc.dao.GirlDao;
 import com.imoc.entity.Girl;
+import com.imoc.enums.ResultError;
+import com.imoc.exception.UniteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,17 @@ public class GirlService {
 
     public List<Girl> findByAge(Integer age){
         return girlDao.findByAge(age);
+    }
+
+
+    public void getAge(Integer id) throws Exception{
+        Girl girl = girlDao.findOne(id);
+        Integer age = girl.getAge();
+        if(10 > age){
+            throw new UniteException(ResultError.PRIMARY_SCHOOL);
+        }else if(10 < age && 16 > age){
+            throw new UniteException(ResultError.MIDDLE_SCHOOL);
+        }
     }
 
 }

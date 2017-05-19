@@ -2,11 +2,17 @@ package com.imoc.web;
 
 
 import com.imoc.entity.Girl;
+import com.imoc.entity.Result;
 import com.imoc.service.GirlService;
+import com.imoc.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,17 +39,18 @@ public class GirlController {
 
     /**
      * 添加一个女生
-     * @param age
-     * @param cupSize
+     * @param girl
+     * @param bindingResult
      * @return
      */
     @PostMapping(value = "/girls")
-    public Girl addGirl(@RequestParam("age") Integer age,
-                          @RequestParam("cupSize") String cupSize){
-        Girl girl = new Girl();
-        girl.setAge(age);
-        girl.setCupSize(cupSize);
-        return girlService.saveGirl(girl);
+    public Result addGirl(@Valid Girl girl, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return ResultUtil.fail("-2",bindingResult.getFieldError().getDefaultMessage());
+        }
+        girl.setAge(girl.getAge());
+        girl.setCupSize(girl.getCupSize());
+        return ResultUtil.success(girlService.saveGirl(girl));
     }
 
     /**
@@ -86,6 +93,11 @@ public class GirlController {
     public String deleteById(@PathVariable("id") Integer id){
         girlService.deleteById(id);
         return "delete success";
+    }
+
+    @GetMapping(value = "/girls/getAge/{id}")
+    public void getAge(@PathVariable("id") Integer id) throws Exception{
+        girlService.getAge(id);
     }
 
 }

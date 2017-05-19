@@ -1,6 +1,6 @@
 package com.imoc.web;
 
-import com.imoc.entity.GirlProperties;
+import com.imoc.properties.GirlProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.imoc.entity;
+package com.imoc.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
